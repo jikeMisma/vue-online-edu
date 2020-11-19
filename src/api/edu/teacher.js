@@ -12,5 +12,21 @@ export default {
       //data表示把数据转换为json进行传送
       data:teacherQuery
     });
+  },
+
+  deleteTeacherById(id){
+    return request({
+      //url: "/table/list",
+      url:`eduservice/teacher/${id}`,
+      method: "delete",
+    });
+  },
+
+  addTeacher(teacher){
+    return request({
+      url:`eduservice/teacher/addTeacher`,
+      method: "post",
+      data:teacher
+    });
   }
 };
