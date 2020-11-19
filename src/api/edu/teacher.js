@@ -28,5 +28,21 @@ export default {
       method: "post",
       data:teacher
     });
+  },
+
+  getTeacherInfo(id){
+    return request({
+      url:`eduservice/teacher/getTeacher/${id}`,
+      method: "get",
+    });
+  },
+
+  //修改讲师
+  updateTeacherInfo(teacher){
+    return request({
+      url:`eduservice/teacher/updateTeacher`,
+      method: "post",
+      data:teacher
+    });
   }
 };
