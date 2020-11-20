@@ -47,29 +47,30 @@
       border
       fit
       highlight-current-row>
+      
       <el-table-column
         label="序号"
-        width="70"
+        min-width="10%"
         align="center">
         <template slot-scope="scope">
           {{ (page - 1) * limit + scope.$index + 1 }}
         </template>
       </el-table-column>
 
-      <el-table-column prop="name" label="名称" width="80" />
+      <el-table-column prop="name" label="名称" min-width="10%" />
 
-      <el-table-column label="头衔" width="80">
+      <el-table-column label="头衔" min-width="15%">
         <template slot-scope="scope">
           {{ scope.row.level===1?'高级讲师':'首席讲师' }}
         </template>
       </el-table-column>
 
 
-      <el-table-column prop="intro" label="资历" />
-      <el-table-column prop="gmtCreate" label="添加时间" width="80"/>
-      <el-table-column prop="sort" label="排序" width="60" />
+      <el-table-column prop="intro" label="资历" min-width="25%"/>
+      <el-table-column prop="gmtCreate" label="添加时间" min-width="20%"/>
+      <el-table-column prop="sort" label="排序" min-width="10%" />
 
-     <el-table-column label="操作" width="200" align="center">
+     <el-table-column label="操作" min-width="20%" align="center">
         <template slot-scope="scope">
           <router-link :to="'/teacher/edit/'+scope.row.id">
             <el-button type="primary" size="mini" icon="el-icon-edit">修改</el-button>

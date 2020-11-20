@@ -26,6 +26,37 @@
       </el-form-item>
 
       <!-- 讲师头像：TODO -->
+      <!-- 讲师头像 -->
+      <el-form-item label="讲师头像">
+        <!-- 头衔缩略图 -->
+        <pan-thumb :image="teacher.avatar" />
+        <!-- 文件上传按钮 -->
+        <el-button
+          type="primary"
+          icon="el-icon-upload"
+          @click="imagecropperShow = true"
+          >更换头像
+        </el-button>
+
+        <!--
+      v-show：是否显示上传组件
+      :key：类似于id，如果一个页面多个图片上传控件，可以做区分
+      :url：后台上传的url地址
+      @close：关闭上传组件
+      @crop-upload-success：上传成功后的回调 
+        <input type="file" name="file"/>
+      -->
+        <image-cropper
+          v-show="imagecropperShow"
+          :width="300"
+          :height="300"
+          :key="imagecropperKey"
+          :url="BASE_API + '/eduoss/fileoss'"
+          field="file"
+          @close="close"
+          @crop-upload-success="cropSuccess"
+        />
+      </el-form-item>
 
       <el-form-item>
         <el-button
@@ -40,7 +71,10 @@
 </template>
 <script>
 import teacherApi from "@/api/edu/teacher";
+import ImageCropper from '@/components/ImageCropper'
+import PanThumb from '@/components/PanThumb'
 export default {
+  components: { ImageCropper, PanThumb },
   data() {
     return {
       teacher: {
@@ -49,77 +83,99 @@ export default {
         level: 1,
         career: "",
         intro: "",
-        avatar: ""
+        avatar: "https://edu-online-mzc.oss-cn-beijing.aliyuncs.com/2020/11/20/2e0a6ae4ae604b68a4d4b09185298850file.png"
       },
+      //上传弹框的组件是否显示？
+      imagecropperShow:false,
+      //上传组件的唯一标识
+      imagecropperKey:0,
+      //获取dev.env.js的地址
+      BASE_API: process.env.BASE_API,
       saveBtnDisabled: false // 保存按钮是否禁用,
     };
   },
-   created() { //页面渲染之前执行
-    this.init()
+  created() {
+    //页面渲染之前执行
+    this.init();
   },
-  watch: {  //监听
-    $route(to, from) { //路由变化方式，路由发生变化，方法就会执行
-      this.init()
+  watch: {
+    //监听
+    $route(to, from) {
+      //路由变化方式，路由发生变化，方法就会执行
+      this.init();
     }
   },
-  methods:{
+  methods: {
+    //关闭头像上传窗口
+    close(){
+      this.imagecropperShow = false;
+      //上传组件初始化
+      this.imagecropperKey = this.imagecropperKey+1;
+
+    },
+    //上传成功的方法
+    cropSuccess(data){
+      this.imagecropperShow = false;
+      //上传之后接口返回地址
+      this.teacher.avatar = data.url;
+      //上传组件初始化
+      this.imagecropperKey = this.imagecropperKey+1;
+    },
     init() {
       //判断路径有id值,做修改
-      if(this.$route.params && this.$route.params.id) {
-          //从路径获取id值
-          const id = this.$route.params.id
-          //调用根据id查询的方法
-          this.getInfo(id)
-      } else { //路径没有id值，做添加
+      if (this.$route.params && this.$route.params.id) {
+        //从路径获取id值
+        const id = this.$route.params.id;
+        //调用根据id查询的方法
+        this.getInfo(id);
+      } else {
+        //路径没有id值，做添加
         //清空表单
-        this.teacher = {}
+        this.teacher = {};
       }
     },
     //根据讲师id查询的方法
     getInfo(id) {
-      teacherApi.getTeacherInfo(id)
-        .then(response => {
-          this.teacher = response.data.teacher
-        })
+      teacherApi.getTeacherInfo(id).then(response => {
+        this.teacher = response.data.teacher;
+      });
     },
     saveOrUpdate() {
       //判断修改还是添加
       //根据teacher是否有id
-      if(!this.teacher.id) {
+      if (!this.teacher.id) {
         //添加
-        this.saveTeacher()
+        this.saveTeacher();
       } else {
         //修改
-        this.updateTeacher()
+        this.updateTeacher();
       }
     },
     //修改讲师的方法
     updateTeacher() {
-      teacherApi.updateTeacherInfo(this.teacher)
-        .then(response => {
-          //提示信息
-          this.$message({
-              type: 'success',
-              message: '修改成功!'
-          });
-          //回到列表页面 路由跳转
-          this.$router.push({path:'/teacher/table'})
-        })
+      teacherApi.updateTeacherInfo(this.teacher).then(response => {
+        //提示信息
+        this.$message({
+          type: "success",
+          message: "修改成功!"
+        });
+        //回到列表页面 路由跳转
+        this.$router.push({ path: "/teacher/table" });
+      });
     },
     //添加讲师的方法
     saveTeacher() {
-      teacherApi.addTeacher(this.teacher)
-        .then(response => {//添加成功
-          //提示信息
-          this.$message({
-              type: 'success',
-              message: '添加成功!'
-          });
-          //回到列表页面 路由跳转
-          this.$router.push({path:'/teacher/table'})
-        })
+      teacherApi.addTeacher(this.teacher).then(response => {
+        //添加成功
+        //提示信息
+        this.$message({
+          type: "success",
+          message: "添加成功!"
+        });
+        //回到列表页面 路由跳转
+        this.$router.push({ path: "/teacher/table" });
+      });
     }
-
   }
-}
+};
 </script>
