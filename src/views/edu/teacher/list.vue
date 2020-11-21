@@ -1,7 +1,6 @@
 <template slot-scope="scope">
   <div class="app-container">
-      <h3>讲师列表</h3>
-
+      
        <!--查询表单-->
     <el-form :inline="true" class="demo-form-inline">
       <el-form-item>
@@ -105,7 +104,7 @@ export default {
         return{
             list:null,
             page:1,
-            limit:5,
+            limit:8,
             total:0,//总记录数
             teacherQuery:{},
         }
