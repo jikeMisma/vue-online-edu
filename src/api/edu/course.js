@@ -57,5 +57,22 @@ export default {
       url: `/eduservice/course/getCourseList`,
       method: "get",
     });
-  }
+  },
+
+  //删除课程
+  deleteCourseById(id){
+    return request({
+      url: `/eduservice/course/`+id,
+      method: "delete",
+    });
+  },
+
+  //讲师列表（条件查询分页）
+  getCourseListPage(current,limit,courseQuery) {
+    return request({
+      url:`/eduservice/course/pageCourseCondition/${current}/${limit}`,
+      method: "post",
+      data:courseQuery
+    });
+  },
 }

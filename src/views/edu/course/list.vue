@@ -98,13 +98,36 @@ export default {
         this.getList();
     },
     methods:{//创建具体的方法
+
+        //根据id删除课程
+        removeDataById(id){
+            this.$confirm('此操作将永久课程, 是否继续?', '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning'
+            }).then(() => {  //点击确定，执行then方法
+                //调用删除的方法
+                course.deleteCourseById(id)
+                    .then(response =>{//删除成功
+                    //提示信息
+                    this.$message({
+                        type: 'success',
+                        message: '删除成功!'
+                    });
+                    //回到列表页面
+                    this.getList()
+                })
+            }) //点击取消，执行catch方法
+        },
         //讲师列表
-        getList(){
-            course.getListCourse()
+        getList(page = 1){
+            this.page = page;
+            course.getCourseListPage(this.page,this.limit,this.courseQuery)
                 .then(response =>{//请求成功
                     //response返回的数据
                     //console.log(response);
-                    this.list = response.data.list;
+                    this.list = response.data.rows;
+                    this.total = response.data.total;
                 })
                 .catch(error => {
                     console.log(error)
