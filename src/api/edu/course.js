@@ -34,4 +34,28 @@ export default {
       data:courseInfo
     });
   },
+
+  //课程确认信息显示
+  getPublishCourseInfo(id){
+    return request({
+      url: `/eduservice/course/getPublishCourseInfo/`+id,
+      method: "get",
+    });
+  },
+
+  //课程的最终发布
+  publishCourse(id){
+    return request({
+      url: `/eduservice/course/publishCourse/`+id,
+      method: "post",
+    });
+  },
+
+  //TODO,课程列表
+  getListCourse(){
+    return request({
+      url: `/eduservice/course/getCourseList`,
+      method: "get",
+    });
+  }
 }
