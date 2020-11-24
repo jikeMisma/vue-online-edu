@@ -27,5 +27,13 @@ export default {
     });
   },
 
+  //删除阿里云中视频
+  deleteAliyunVideo(id) {
+    return request({
+      url: `/enuvod/video/removeAliyunVideo/`+id,
+      method: "delete",
+    });
+  },
+
 
 }
