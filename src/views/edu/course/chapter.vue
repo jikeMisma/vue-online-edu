@@ -233,10 +233,10 @@ export default {
       this.dialogVideoFormVisible = true;
 
       //设置章节id
+      
+      this.video = {};
+      this.fileList = [];
       this.video.chapterId = chapterId;
-      this.video.title = "";
-      this.video.sort = 0;
-      this.free = 0;
     },
 
     //添加小结
