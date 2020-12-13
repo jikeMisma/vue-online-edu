@@ -58,16 +58,16 @@
 
       <el-table-column prop="name" label="名称" min-width="10%" />
 
-      <el-table-column label="头衔" min-width="15%">
+      <el-table-column label="头衔" min-width="10%">
         <template slot-scope="scope">
           {{ scope.row.level===1?'高级讲师':'首席讲师' }}
         </template>
       </el-table-column>
 
 
-      <el-table-column prop="intro" label="资历" min-width="25%"/>
-      <el-table-column prop="gmtCreate" label="添加时间" min-width="20%"/>
-      <el-table-column prop="sort" label="排序" min-width="10%" />
+      <el-table-column prop="intro" label="资历" min-width="39%"/>
+      <el-table-column prop="gmtCreate" label="添加时间" min-width="15%"/>
+      <el-table-column prop="sort" label="排序" min-width="6%" />
 
      <el-table-column label="操作" min-width="20%" align="center">
         <template slot-scope="scope">

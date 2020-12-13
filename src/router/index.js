@@ -145,6 +145,83 @@ export const constantRouterMap = [
   },
 
 
+  //轮播图管理
+   {
+    path: '/banner',
+    component: Layout,
+    redirect: '/banner/table',
+    name: '轮播图管理',
+    meta: { title: '轮播图管理', icon: 'user' },
+    children: [
+      {
+        path: 'table',
+        name: '轮播图列表',
+        component: () => import('@/views/edu/banner/list'),
+        meta: { title: '轮播图列表', icon: 'table' }
+      },
+      {
+        path: 'save',
+        name: '添加轮播图',
+        component: () => import('@/views/edu/banner/save'),
+        meta: { title: '添加轮播图', icon: 'tree' }
+      },
+      {
+        path: 'edit/:id',
+        name: 'EduTeacherEdit',
+        component: () => import('@/views/edu/banner/save'),
+        meta: { title: '编辑轮播图', noCache: 'tree' },
+        hidden:true
+      }
+
+    ]
+  },
+
+  //数据分析管理
+  {
+    path: '/sta',
+    component: Layout,
+    redirect: '/sta/table',
+    name: '统计分析',
+    meta: { title: '统计分析', icon: 'example' },
+    children: [
+      {
+        path: 'create',
+        name: '生成数据',
+        component: () => import('@/views/sta/create'),
+        meta: { title: '生成数据', icon: 'table' }
+      },
+      {
+        path: 'show',
+        name: '图表显示',
+        component: () => import('@/views/sta/show'),
+        meta: { title: '图表显示', icon: 'tree' }
+      },
+      {
+        path: 'info/:id',
+        name: 'EduCourseInfoEdit',
+        component: () => import('@/views/edu/course/info'),
+        meta: { title: '编辑课程基本信息', noCache: true },
+        hidden: true
+      },
+      {
+        path: 'chapter/:id',
+        name: 'EduCourseChapterEdit',
+        component: () => import('@/views/edu/course/chapter'),
+        meta: { title: '编辑课程大纲', noCache: true },
+        hidden: true
+      },
+      {
+        path: 'publish/:id',
+        name: 'EduCoursePublishEdit',
+        component: () => import('@/views/edu/course/publish'),
+        meta: { title: '发布课程', noCache: true },
+        hidden: true
+      }
+
+    ]
+  },
+
+
 
   {
     path: '/example',
