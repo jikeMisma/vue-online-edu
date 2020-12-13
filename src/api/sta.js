@@ -8,4 +8,12 @@ export default {
       method: "post"
     });
   },
+
+  //获取统计数据进行显示
+  getDataSta(searchObj) {
+    return request({
+      url: `/staservice/sta/showData/${searchObj.type}/${searchObj.begin}/${searchObj.end}`,
+      method: "get"
+    });
+  },
 }
